@@ -5,9 +5,9 @@ test("Program is defined", () => {
 });
 
 // Testing using mock functions
-test("jestMockFunctions with fake impl", () => {
+test("jestMockFunctions1 with fake impl", () => {
   const mockFn = jest.fn((num) => 42 + num);
-  Program.jestMockFunctions([100, 101], mockFn);
+  Program.jestMockFunctions1([100, 101], mockFn);
 
   // Expect that the callback func was called twice, once for each number in the numbers array
   expect(mockFn.mock.calls.length).toBe(2);
@@ -20,17 +20,20 @@ test("jestMockFunctions with fake impl", () => {
   expect(mockFn.mock.results[0].value).toBe(142);
 });
 
-test("jestMockFunctions with mock return val", () => {
+// Testing using mock functions
+test("jestMockFunctions2 with mock return val", () => {
   const mockFn = jest.fn();
-  mockFn.mockReturnValueOnce(10).mockReturnValueOnce("x").mockReturnValue(true);
-  Program.jestMockFunctions([100, 101, 102], mockFn);
+  mockFn.mockReturnValueOnce(true).mockReturnValueOnce(false).mockReturnValue(true);
+  const output = Program.jestMockFunctions2([100, 101, 102], mockFn);
 
   expect(mockFn.mock.calls.length).toBe(3);
   expect(mockFn.mock.calls[0][0]).toBe(100);
   expect(mockFn.mock.calls[1][0]).toBe(101);
   expect(mockFn.mock.calls[2][0]).toBe(102);
 
-  expect(mockFn.mock.results[0].value).toBe(10);
-  expect(mockFn.mock.results[1].value).toBe("x");
+  expect(mockFn.mock.results[0].value).toBe(true);
+  expect(mockFn.mock.results[1].value).toBe(false);
   expect(mockFn.mock.results[2].value).toBe(true);
+
+  expect(output).toEqual(expect.arrayContaining([100, 102]));
 });
