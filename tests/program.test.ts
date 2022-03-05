@@ -53,3 +53,14 @@ test("jestMockModules1 to mock api calls with module mocks", async () => {
   expect(output.result).toMatchObject(mockData);
   expect(mockedGetFn.mock.calls.length).toBe(1);
 });
+
+test("jestMockModules1 to mock api calls with impl replacement", async () => {
+  const mockedGetFn = rm.RestClient.prototype.get as jest.Mock;
+  mockedGetFn.mockImplementationOnce(() => {
+    const age = 65;
+    return `my name is bob and my age is ${age}`;
+  });
+
+  const output = await Program.jestMockModules1();
+  expect(output).toBe("my name is bob and my age is 65");
+});
