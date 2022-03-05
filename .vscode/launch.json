@@ -1,0 +1,17 @@
+{
+    "configurations": [{
+        "name": "start (debug)",
+        "type": "pwa-node",
+        "request": "launch",
+        "console": "integratedTerminal",
+        "runtimeArgs": [
+            "run-script",
+            "start"
+        ],
+        "runtimeExecutable": "npm",
+        "skipFiles": [
+            "<node_internals>/**",
+            "node_modules/**"
+        ],        
+    }] 
+}
