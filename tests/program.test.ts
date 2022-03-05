@@ -1,6 +1,9 @@
 import Program from "../src/program";
 import * as rm from "typed-rest-client";
 
+// AutoMock typed-rest-client module
+jest.mock("typed-rest-client");
+
 test("Program is defined", () => {
   expect(Program).toBeDefined();
 });
@@ -39,15 +42,14 @@ test("jestMockFunctions2 with mock return val", () => {
   expect(output).toEqual(expect.arrayContaining([100, 102]));
 });
 
-// Mocking external modules (partial mock)
-test("jestMockModules1 with mock api calls", async () => {
-  const actual = jest.requireActual("typed-rest-client");
+// Testing using module mocks
+test("jestMockModules1 to mock api calls with module mocks", async () => {
   const mockData = { name: "bob" };
-  const client: rm.RestClient = {
-    ...actual,
-    get: jest.fn().mockReturnValueOnce({ result: mockData }),
-  };
+  const mockedGetFn = rm.RestClient.prototype.get as jest.Mock;
+  mockedGetFn.mockReturnValueOnce({ result: mockData });
 
-  const output = await Program.jestMockModules1(client);
+  const output = await Program.jestMockModules1();
+
   expect(output.result).toMatchObject(mockData);
+  expect(mockedGetFn.mock.calls.length).toBe(1);
 });

@@ -15,7 +15,8 @@ export default class Program {
     return items.filter(callback);
   }
 
-  static async jestMockModules1(client: rm.RestClient): Promise<rm.IRestResponse<unknown>> {
+  static async jestMockModules1(): Promise<rm.IRestResponse<unknown>> {
+    const client = new rm.RestClient("my-user-agemt");
     return client.get("https://www.fitbit.com/apis.json");
   }
 }
