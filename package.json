@@ -20,6 +20,7 @@
     "typescript": "^4.5.4"
   },
   "dependencies": {
-    "cd": "^0.3.3"
+    "cd": "^0.3.3",
+    "typed-rest-client": "^1.8.6"
   }
 }
